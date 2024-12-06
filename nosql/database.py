@@ -2,8 +2,12 @@ import pickle
 import re
 
 file = "database.db"
-TN_pattern = r"\bfrom\s*([\w]+)\b"
-CLM_pattern = r"\bselect\s+([\w*,\s]+)\s+from\b"
+
+# Regular expressions to find the table names and column names
+TN_pattern1 = r"\bfrom\s*([\w]+)\b"
+CLM_pattern1 = r"\bselect\s+([\w*,\s]+)\s+from\b"
+TN_pattern2 = r"\binto\s*(\w+)\b"
+CLM_pattern2 = r"\bvalues\s*\(\s*([\w]+\s*)+\b"
 
 """
 database strcture:
@@ -12,6 +16,11 @@ database strcture:
                                 | row   |
                                 |entire table valeus|
 
+
+
+                                Example queries:
+                                    select: select * from tablename
+                                    insert: insert into tablename values (VALUES)
 
 """
 
@@ -22,12 +31,12 @@ class Database:
 
     def query(self, query):
         try:
-            tablename = (re.search(TN_pattern, query)).group(1)
+            tablename = (re.search(TN_pattern1, query)).group(1)
             table = self.database.get(tablename)
             if not table:
                 print("Table isn't present in the database")
             else:
-                column_names = re.search(CLM_pattern, query).group(1)
+                column_names = re.search(CLM_pattern1, query).group(1)
                 columns = list(map(str.strip, list(column_names.split(","))))
                 indexes = []
                 if len(columns) == 1 and columns[0] == "*":
@@ -40,12 +49,28 @@ class Database:
                         if column not in table:
                             print(f"{column} not present in the table")
                             return
+                        indexes.append(list(table.keys()).index(column))
+                    for row in table[1]:
+                        for index in indexes:
+                            print(f"| {row.get(index)} |")
+                            print()
 
         except AttributeError:
-            print("Please type the command properly with proper spacing between words")
+            print(
+                "Please type the command properly with proper spacing between words, with existing tablenames and column names"
+            )
 
     def insert(self, query):
-        pass
+        try:
+            tablename = (re.search(TN_pattern2, query).group(1))
+            table = self.database.get(tablename)
+            if not tablename:
+                print("Table isn't present in the database")
+            else:
+                column_names =
+
+        except AttributeError:
+            print("Please  type the commnd propery with proper spacing between words, with exisitng tablenames and columns names")
 
     def create(self, query):
         pass
