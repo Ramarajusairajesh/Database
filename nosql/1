@@ -83,11 +83,9 @@ class Database:
                         f"wrong columns try again your query \n \t {
                             query} \n \t Columns inside table {list(table[0].keys())}"
                     )
-
-                else:
-                    for column in columns:
-                        typeof = list(str(type(column)).split('\''))[1]
-                        typeof =
+                indexes = []
+                for column in columns:
+                    pass
 
         except AttributeError:
             print(
