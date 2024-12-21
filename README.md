@@ -22,13 +22,13 @@ This project is a simple yet powerful learning tool that demonstrates key concep
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/simple-nosql-database.git
-   cd simple-nosql-database
+   git clone https://github.com/Ramarajusairajesh/Database
+   cd Database
    ```
 2. Ensure you have Python 3 installed on your system.
 3. Run the script directly using:
    ```bash
-   python3 simple_nosql_database.py
+   python3 no_sql.py
    ```
 
 ## Usage
